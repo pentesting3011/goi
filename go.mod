@@ -1,3 +1,3 @@
-module github.com/pentesting3011/goi
+module goi
 
 go 1.23.2

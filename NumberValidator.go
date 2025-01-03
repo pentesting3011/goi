@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-type NumberValidator struct {
+type numberValidator struct {
 	Validator
 	min float64
 	max float64
@@ -13,13 +13,13 @@ type NumberValidator struct {
 
 var validNums = []string{"int8", "int16", "int32", "int64", "int", "float32", "float64", "uint8", "uint16", "uint32", "uint64", "uint"}
 
-func Number() *NumberValidator {
-	v := &NumberValidator{}
+func Number() *numberValidator {
+	v := &numberValidator{}
 	v.NumberBase()
 	return v
 }
 
-func (s *NumberValidator) NumberBase() {
+func (s *numberValidator) NumberBase() {
 	s.ruleNames = append(s.ruleNames, "base")
 	s.required = false
 	s.rules = append(s.rules, func(value *any) error {
@@ -33,7 +33,7 @@ func (s *NumberValidator) NumberBase() {
 	})
 }
 
-func (s *NumberValidator) Required() *NumberValidator {
+func (s *numberValidator) Required() *numberValidator {
 	s.ruleNames = append(s.ruleNames, "required")
 	s.required = true
 	s.rules = append(s.rules, func(value *any) error {
@@ -45,7 +45,7 @@ func (s *NumberValidator) Required() *NumberValidator {
 	return s
 }
 
-func (s *NumberValidator) Min(length float64) *NumberValidator {
+func (s *numberValidator) Min(length float64) *numberValidator {
 	s.ruleNames = append(s.ruleNames, "min")
 	s.min = length
 	s.rules = append(s.rules, func(value *any) error {
@@ -60,7 +60,7 @@ func (s *NumberValidator) Min(length float64) *NumberValidator {
 	return s
 }
 
-func (s *NumberValidator) Max(length float64) *NumberValidator {
+func (s *numberValidator) Max(length float64) *numberValidator {
 	s.ruleNames = append(s.ruleNames, "max")
 	s.max = length
 	s.rules = append(s.rules, func(value *any) error {
@@ -76,24 +76,24 @@ func (s *NumberValidator) Max(length float64) *NumberValidator {
 }
 
 // Sets a default value if the original value is undefined
-func (s *NumberValidator) Default(defaultValue any) *NumberValidator {
+func (s *numberValidator) Default(defaultValue any) *numberValidator {
 	s.ruleNames = append(s.ruleNames, "default")
 	s.defaultValue = defaultValue
 	return s
 }
 
-func (s *NumberValidator) Optional() *NumberValidator {
+func (s *numberValidator) Optional() *numberValidator {
 	s.ruleNames = append(s.ruleNames, "optional")
 	s.required = false
 	return s
 }
 
-func (s *NumberValidator) Label(label string) *NumberValidator {
+func (s *numberValidator) Label(label string) *numberValidator {
 	s.label = label
 	return s
 }
 
-func (s *NumberValidator) Valid(value []any) *NumberValidator {
+func (s *numberValidator) Valid(value []any) *numberValidator {
 	s.ruleNames = append(s.ruleNames, "valid")
 	for _, v := range value {
 		typeVar := reflect.TypeOf(v).Kind()
@@ -127,7 +127,7 @@ func (s *NumberValidator) Valid(value []any) *NumberValidator {
 }
 
 // You must pass the pointer to the value you want to validate
-func (s *NumberValidator) Validate(data *any) error {
+func (s *numberValidator) Validate(data *any) error {
 	if s.label == "" {
 		s.label = "value"
 	}

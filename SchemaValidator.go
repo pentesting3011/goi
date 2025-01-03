@@ -5,7 +5,7 @@ import (
 	"reflect"
 )
 
-type SchemaValidator struct {
+type schemaValidator struct {
 	schemaRuleNamesIn []string
 	schemasIn         []any
 
@@ -13,8 +13,8 @@ type SchemaValidator struct {
 	values           []any
 }
 
-func Schema(m map[string]any) *SchemaValidator {
-	s := &SchemaValidator{}
+func Schema(m map[string]any) *schemaValidator {
+	s := &schemaValidator{}
 	for k, v := range m {
 		s.schemaRuleNamesIn = append(s.schemaRuleNamesIn, k)
 		s.schemasIn = append(s.schemasIn, v)
@@ -22,7 +22,7 @@ func Schema(m map[string]any) *SchemaValidator {
 	return s
 }
 
-func (s *SchemaValidator) Validate(data *any) error {
+func (s *schemaValidator) Validate(data *any) error {
 	dataVal := reflect.ValueOf(*data)
 	if dataVal.Kind() != reflect.Map {
 		return fmt.Errorf("not a map")

@@ -8,20 +8,20 @@ import (
 	"unicode/utf8"
 )
 
-type StringValidator struct {
+type stringValidator struct {
 	Validator
 	min   int
 	max   int
 	regex *regexp.Regexp
 }
 
-func String() *StringValidator {
-	v := &StringValidator{}
+func String() *stringValidator {
+	v := &stringValidator{}
 	v.StringBase()
 	return v
 }
 
-func (s *StringValidator) StringBase() {
+func (s *stringValidator) StringBase() {
 	s.ruleNames = append(s.ruleNames, "base")
 	s.required = false
 	s.rules = append(s.rules, func(value *any) error {
@@ -35,7 +35,7 @@ func (s *StringValidator) StringBase() {
 	})
 }
 
-func (s *StringValidator) Required() *StringValidator {
+func (s *stringValidator) Required() *stringValidator {
 	s.ruleNames = append(s.ruleNames, "required")
 	s.required = true
 	s.rules = append(s.rules, func(value *any) error {
@@ -47,7 +47,7 @@ func (s *StringValidator) Required() *StringValidator {
 	return s
 }
 
-func (s *StringValidator) LowerCase() *StringValidator {
+func (s *stringValidator) LowerCase() *stringValidator {
 	s.ruleNames = append(s.ruleNames, "lowercase")
 	s.rules = append(s.rules, func(value *any) error {
 		if *value != nil && *s.originalValue != nil {
@@ -59,7 +59,7 @@ func (s *StringValidator) LowerCase() *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Trim() *StringValidator {
+func (s *stringValidator) Trim() *stringValidator {
 	s.ruleNames = append(s.ruleNames, "trim")
 	s.rules = append(s.rules, func(value *any) error {
 		if *value != nil && *s.originalValue != nil {
@@ -71,7 +71,7 @@ func (s *StringValidator) Trim() *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Regex(regex string) *StringValidator {
+func (s *stringValidator) Regex(regex string) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "regex")
 	s.regex = regexp.MustCompile(regex)
 	s.rules = append(s.rules, func(value *any) error {
@@ -83,7 +83,7 @@ func (s *StringValidator) Regex(regex string) *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Min(length int) *StringValidator {
+func (s *stringValidator) Min(length int) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "min")
 	s.min = length
 	s.rules = append(s.rules, func(value *any) error {
@@ -98,7 +98,7 @@ func (s *StringValidator) Min(length int) *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Max(length int) *StringValidator {
+func (s *stringValidator) Max(length int) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "max")
 	s.max = length
 	s.rules = append(s.rules, func(value *any) error {
@@ -113,7 +113,7 @@ func (s *StringValidator) Max(length int) *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Alphanum() *StringValidator {
+func (s *stringValidator) Alphanum() *stringValidator {
 	s.ruleNames = append(s.ruleNames, "alphanum")
 	s.rules = append(s.rules, func(value *any) error {
 		rgx := regexp.MustCompile(`^[a-zA-Z0-9]*$`)
@@ -126,24 +126,24 @@ func (s *StringValidator) Alphanum() *StringValidator {
 }
 
 // Sets a default value if the original value is undefined
-func (s *StringValidator) Default(defaultValue any) *StringValidator {
+func (s *stringValidator) Default(defaultValue any) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "default")
 	s.defaultValue = defaultValue
 	return s
 }
 
-func (s *StringValidator) Optional() *StringValidator {
+func (s *stringValidator) Optional() *stringValidator {
 	s.ruleNames = append(s.ruleNames, "optional")
 	s.required = false
 	return s
 }
 
-func (s *StringValidator) Label(label string) *StringValidator {
+func (s *stringValidator) Label(label string) *stringValidator {
 	s.label = label
 	return s
 }
 
-func (s *StringValidator) Valid(value []any) *StringValidator {
+func (s *stringValidator) Valid(value []any) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "valid")
 	for _, v := range value {
 		typeVar := reflect.TypeOf(v).Kind()
@@ -170,7 +170,7 @@ func (s *StringValidator) Valid(value []any) *StringValidator {
 	return s
 }
 
-func (s *StringValidator) Custom(customFunction func(value *any, helpers *Helper) any) *StringValidator {
+func (s *stringValidator) Custom(customFunction func(value *any, helpers *Helper) any) *stringValidator {
 	s.ruleNames = append(s.ruleNames, "custom")
 	s.rules = append(s.rules, func(v *any) error {
 		h := &Helper{}
@@ -188,7 +188,7 @@ func (s *StringValidator) Custom(customFunction func(value *any, helpers *Helper
 }
 
 // You must pass the pointer to the value you want to validate
-func (s *StringValidator) Validate(data *any) error {
+func (s *stringValidator) Validate(data *any) error {
 	if s.label == "" {
 		s.label = "value"
 	}

@@ -1,4 +1,4 @@
-package main
+package goi
 
 type Validatable interface {
 	Validate(data *any) error

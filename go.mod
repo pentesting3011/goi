@@ -1,3 +1,3 @@
-module github.com/pentesting3011/goi
+module github.com/pentesting3011
 
-go 1.23.2
+go 1.23.3
